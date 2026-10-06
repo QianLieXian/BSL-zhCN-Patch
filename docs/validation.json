@@ -19,6 +19,12 @@
     "Windows PowerShell 5.1 installer generated matching repaired files",
     "Installer refused existing output and modified upstream files"
   ],
-  "runtime_reload_confirmed": false,
-  "controlled_fps_comparison": false
+  "runtime_reload_confirmed": true,
+  "controlled_fps_comparison": false,
+  "runtime_profiles_confirmed": [
+    "GTX1070TI_BALANCED",
+    "GTX1070TI_FAST"
+  ],
+  "runtime_dimension_confirmed": "minecraft:overworld",
+  "runtime_evidence": "Game log: pipeline creation completed; no further preprocessing or shader compilation errors after repaired reloads"
 }

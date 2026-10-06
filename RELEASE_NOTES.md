@@ -14,6 +14,6 @@
 
 ## 此版修复与验证
 
-修复初版中文 `.properties` 注释导致的 Iris 预处理异常及 `shadowcomp` 连带报错。语言、配置引用、采样归一化、官方原包匹配与 Windows 补丁生成检查已通过。游戏重载验证结果见仓库的验证说明；尚无受控性能实测。
+修复初版中文 `.properties` 注释导致的 Iris 预处理异常及 `shadowcomp` 连带报错。语言、配置引用、采样归一化、官方原包匹配与 Windows 补丁生成检查已通过。GTX 1070 Ti／Minecraft 26.3／Iris 1.11.7 的游戏日志已确认保真均衡与高帧流畅成功加载主世界，无上述预处理或编译错误；其他预设及维度仍待验证，尚无受控性能实测。
 
 此发布只提供补丁，**不包含完整原光影代码和纹理**。两个 ZIP 各自附带安装说明，`SHA256SUMS.txt` 提供校验值。[完整说明](https://github.com/QianLieXian/BSL-zhCN-Patch#readme)。

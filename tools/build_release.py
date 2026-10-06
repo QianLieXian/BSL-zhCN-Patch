@@ -47,12 +47,17 @@ def build():
         archives.append(archive)
     sums = ''.join(hashlib.sha256(p.read_bytes()).hexdigest() + '  ' + p.name + '\n' for p in archives)
     (OUT / 'SHA256SUMS.txt').write_text(sums, encoding='utf-8')
+    prior_path = REPO / 'docs/validation.json'
+    prior = json.loads(prior_path.read_text(encoding='utf-8')) if prior_path.exists() else {}
     report = {'base_version': 'BSL 10.1.8', 'patch_version': VERSION, 'language': counts,
               'checks': ['No duplicate language keys', 'All options have Chinese tooltips',
                          'ZIP CRC passed', 'No upstream source files or textures in release ZIPs',
                          'Windows PowerShell 5.1 installer generated matching repaired files',
                          'Installer refused existing output and modified upstream files'],
-              'runtime_reload_confirmed': False, 'controlled_fps_comparison': False}
+              'runtime_reload_confirmed': prior.get('runtime_reload_confirmed', False),
+              'controlled_fps_comparison': False}
+    for key in ['runtime_profiles_confirmed', 'runtime_dimension_confirmed', 'runtime_evidence']:
+        if key in prior: report[key] = prior[key]
     (REPO / 'docs/validation.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(sums)
 
