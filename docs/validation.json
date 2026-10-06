@@ -1,0 +1,24 @@
+{
+  "base_version": "BSL 10.1.8",
+  "patch_version": "v0.1.0",
+  "language": {
+    "standard": {
+      "entries": 1058,
+      "options_with_tooltips": 366
+    },
+    "optimized": {
+      "entries": 1073,
+      "options_with_tooltips": 368
+    }
+  },
+  "checks": [
+    "No duplicate language keys",
+    "All options have Chinese tooltips",
+    "ZIP CRC passed",
+    "No upstream source files or textures in release ZIPs",
+    "Windows PowerShell 5.1 installer generated matching repaired files",
+    "Installer refused existing output and modified upstream files"
+  ],
+  "runtime_reload_confirmed": false,
+  "controlled_fps_comparison": false
+}

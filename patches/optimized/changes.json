@@ -1,0 +1,401 @@
+{
+  "format": 1,
+  "base_version": "10.1.8",
+  "official_download": "https://capttatsu.com/bslshaders/download.html",
+  "official_modrinth_version": "https://modrinth.com/shader/bsl-shaders/version/Y68yiql9",
+  "files": [
+    {
+      "path": "lib/settings.glsl",
+      "base_sha256": "808a7fb287dc081d889b3a8abb36c39590c12bff53bd751e839737e3a1cd13aa",
+      "patched_sha256": "1cc7c61a383ac106c3a942dbe686187fd93966f15d06c52b0149ad10813cc374",
+      "ops": [
+        {
+          "start": 6,
+          "end": 23,
+          "lines": [
+            "可在游戏内的光影设置中开启、关闭和调节功能；修改本文件前请备份。",
+            "仅含名称的 #define 是开关：去掉行首 // 开启，加上 // 关闭。",
+            "  #define FEATURE  表示开启；//#define FEATURE 表示关闭。",
+            "带数值的 #define 或 const int/float 是多选项或参数。",
+            "只能使用行尾方括号注释 //[...] 中列出的数值，不要注释这些参数行。",
+            "  #define MULTI_OPTION_FEATURE 0 //[0 1 2]  当前值为 0。",
+            "  #define PARAMETER 1.00 //[0.00 0.25 1.00]  当前值为 1.00。",
+            "各项中文说明请阅读 lang/zh_CN.lang，或在游戏内将鼠标停留在选项上。",
+            "“条件禁用”及之后的部分负责兼容与依赖关系，请勿随意修改。",
+            "新增性能选项默认采用原版质量；请选择 1070 Ti 配置应用优化。"
+          ]
+        },
+        {
+          "start": 25,
+          "end": 26,
+          "lines": [
+            "//光影选项//"
+          ]
+        },
+        {
+          "start": 29,
+          "end": 30,
+          "lines": [
+            "// 性能微调：默认值保持原版 30 步反射与 9 点阴影滤波。",
+            "  #define SSR_STEPS 30 //[16 20 24 30]",
+            "  #define SHADOW_FILTER_SAMPLES 9 //[5 9]",
+            "",
+            "//光照//"
+          ]
+        },
+        {
+          "start": 67,
+          "end": 68,
+          "lines": [
+            "//材质//"
+          ]
+        },
+        {
+          "start": 113,
+          "end": 114,
+          "lines": [
+            "//环境//"
+          ]
+        },
+        {
+          "start": 217,
+          "end": 218,
+          "lines": [
+            "//镜头效果//"
+          ]
+        },
+        {
+          "start": 240,
+          "end": 241,
+          "lines": [
+            "//抗锯齿"
+          ]
+        },
+        {
+          "start": 253,
+          "end": 254,
+          "lines": [
+            "//颜色//"
+          ]
+        },
+        {
+          "start": 417,
+          "end": 418,
+          "lines": [
+            "//色调映射与调色//"
+          ]
+        },
+        {
+          "start": 462,
+          "end": 463,
+          "lines": [
+            "//附加效果//"
+          ]
+        },
+        {
+          "start": 472,
+          "end": 473,
+          "lines": [
+            "//条件禁用//"
+          ]
+        },
+        {
+          "start": 487,
+          "end": 488,
+          "lines": [
+            "//锐化启用条件//"
+          ]
+        },
+        {
+          "start": 492,
+          "end": 493,
+          "lines": [
+            "//原版式远景雾启用条件//"
+          ]
+        },
+        {
+          "start": 505,
+          "end": 506,
+          "lines": [
+            "//描边参数//"
+          ]
+        },
+        {
+          "start": 529,
+          "end": 530,
+          "lines": [
+            "//复古滤镜会关闭抗锯齿//"
+          ]
+        },
+        {
+          "start": 535,
+          "end": 536,
+          "lines": [
+            "//1.15 至 1.16 G7 的法线兼容处理//"
+          ]
+        },
+        {
+          "start": 540,
+          "end": 541,
+          "lines": [
+            "//彩色方块光会关闭自发光染色//"
+          ]
+        },
+        {
+          "start": 545,
+          "end": 546,
+          "lines": [
+            "//使选项可被游戏设置菜单识别//"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "lib/lighting/shadows.glsl",
+      "base_sha256": "eeae4abca3722a548fdee9b26c140748e9f5698843e17001c5ae3b9e7d7e9609",
+      "patched_sha256": "3948e6035a34583cbeefa0e1c46f891daf496b4b3a32dd4543725301c2176de3",
+      "ops": [
+        {
+          "start": 105,
+          "end": 107,
+          "lines": [
+            "    for (int i = 0; i < SHADOW_FILTER_SAMPLES; i++) {",
+            "        // 5 点模式取中心与四个轴向点，保持采样关于中心对称；9 点保留原版。",
+            "        #if SHADOW_FILTER_SAMPLES == 5",
+            "        int sampleIndex = i == 0 ? 0 : i * 2 - 1;",
+            "        #else",
+            "        int sampleIndex = i;",
+            "        #endif",
+            "        vec2 shadowOffset = shadowOffsets[sampleIndex] * offset;"
+          ]
+        },
+        {
+          "start": 109,
+          "end": 110,
+          "lines": [
+            "    shadow0 /= float(SHADOW_FILTER_SAMPLES);"
+          ]
+        },
+        {
+          "start": 114,
+          "end": 116,
+          "lines": [
+            "        for (int i = 0; i < SHADOW_FILTER_SAMPLES; i++) {",
+            "            // 5 点模式取中心与四个轴向点，保持采样关于中心对称；9 点保留原版。",
+            "        #if SHADOW_FILTER_SAMPLES == 5",
+            "        int sampleIndex = i == 0 ? 0 : i * 2 - 1;",
+            "        #else",
+            "        int sampleIndex = i;",
+            "        #endif",
+            "        vec2 shadowOffset = shadowOffsets[sampleIndex] * offset;"
+          ]
+        },
+        {
+          "start": 120,
+          "end": 121,
+          "lines": [
+            "        shadowCol /= float(SHADOW_FILTER_SAMPLES);"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "lib/reflections/raytrace.glsl",
+      "base_sha256": "f1ddde3723110de60fd5f30d3bee60b2f48528fc18b94c3861bf85f199094d14",
+      "patched_sha256": "b408b4e0e13653892148dcbfc66f37b6c948f35d47ddf7b300db04bbbf2d59c6",
+      "ops": [
+        {
+          "start": 51,
+          "end": 52,
+          "lines": [
+            "    // 只限制最大追踪步数，不更改步长与细化规则；低档可能漏掉细小反射。",
+            "    for(int i = 0; i < SSR_STEPS; i++) {"
+          ]
+        },
+        {
+          "start": 92,
+          "end": 94,
+          "lines": [
+            "\t// 上一帧重投影，算法来自 Chocapic13",
+            "\t// 对 Voxy 区块强制使用重投影"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "shaders.properties",
+      "base_sha256": "3e84e9a5f6c30d0601330feee4bad7ee7f426b15abaf1705d679d6d6455c6071",
+      "patched_sha256": "41a32bb4ead1a3a3627ec1b973063e1c3d1520bc57698098e4f5aa72de452175",
+      "ops": [
+        {
+          "start": 0,
+          "end": 1,
+          "lines": [
+            "#BSL \\u5149\\u5f71\\u914d\\u7f6e\\u5c5e\\u6027"
+          ]
+        },
+        {
+          "start": 2,
+          "end": 4,
+          "lines": [
+            "#\\u753b\\u8d28\\u9884\\u8bbe",
+            "profile.MINIMUM=SSR_STEPS=30 SHADOW_FILTER_SAMPLES=9 !AO !LIGHT_SHAFT !SHADOW !SHADOW_COLOR !SHADOW_FILTER shadowMapResolution=512 shadowDistance=128.0 !TAA"
+          ]
+        },
+        {
+          "start": 9,
+          "end": 10,
+          "lines": [
+            "",
+            "# GTX 1070 Ti\\uff1a\\u4fdd\\u7559\\u4e3b\\u8981\\u5149\\u5f71\\u6548\\u679c\\uff0c\\u6309\\u9634\\u5f71\\u8303\\u56f4\\u4e0e\\u91c7\\u6837\\u5f00\\u9500\\u5206\\u6863\\uff1b\\u9700\\u5b9e\\u9645\\u6e38\\u620f\\u6d4b\\u5e27\\u3002",
+            "profile.GTX1070TI_BALANCED=SHADOW SHADOW_FILTER SHADOW_COLOR SHADOW_ENTITY SHADOW_BLOCK_ENTITY SHADOW_VEGETATION !SHADOW_CLOUD SHADOW_LOD AO LIGHT_SHAFT TAA FXAA TAA_MODE=0 !TAA_SELECTIVE CLOUDS=2 CLOUD_THICKNESS=5 CLOUD_DETAIL=1.0 REFLECTION=2 REFLECTION_MODE=1 REFLECTION_TRANSLUCENT !REFLECTION_PREVIOUS REFLECTION_SPECULAR !REFLECTION_SKYBOX SPECULAR_HIGHLIGHT=2 !DOF !MOTION_BLUR !DIRTY_LENS !WORLD_CURVATURE !RETRO_FILTER !WHITE_WORLD MCBL_DISTANCE=128 MCBL_HALF_HEIGHT !MCBL_FOG !MCBL_SS MATERIAL_FORMAT=1 SELF_SHADOW_QUALITY=8 PARALLAX_QUALITY=32 PARALLAX_DISTANCE=16 shadowMapResolution=2048 shadowDistance=192.0 SSR_STEPS=24 SHADOW_FILTER_SAMPLES=9 AO_METHOD=0 REFLECTION_LOD=1 !MULTICOLORED_BLOCKLIGHT !ADVANCED_MATERIALS REFLECTION_ROUGH PARALLAX SELF_SHADOW WATER_PARALLAX",
+            "profile.GTX1070TI_FAST=SHADOW SHADOW_FILTER SHADOW_COLOR SHADOW_ENTITY SHADOW_BLOCK_ENTITY SHADOW_VEGETATION !SHADOW_CLOUD SHADOW_LOD AO LIGHT_SHAFT TAA FXAA TAA_MODE=0 !TAA_SELECTIVE CLOUDS=2 CLOUD_THICKNESS=5 CLOUD_DETAIL=1.0 REFLECTION=2 REFLECTION_MODE=1 REFLECTION_TRANSLUCENT !REFLECTION_PREVIOUS REFLECTION_SPECULAR !REFLECTION_SKYBOX SPECULAR_HIGHLIGHT=2 !DOF !MOTION_BLUR !DIRTY_LENS !WORLD_CURVATURE !RETRO_FILTER !WHITE_WORLD MCBL_DISTANCE=128 MCBL_HALF_HEIGHT !MCBL_FOG !MCBL_SS MATERIAL_FORMAT=1 SELF_SHADOW_QUALITY=8 PARALLAX_QUALITY=32 PARALLAX_DISTANCE=16 shadowMapResolution=1536 shadowDistance=128.0 SSR_STEPS=20 SHADOW_FILTER_SAMPLES=5 AO_METHOD=1 REFLECTION_LOD=0 !MULTICOLORED_BLOCKLIGHT !ADVANCED_MATERIALS REFLECTION_ROUGH PARALLAX SELF_SHADOW !WATER_PARALLAX",
+            "profile.GTX1070TI_COLOR=SHADOW SHADOW_FILTER SHADOW_COLOR SHADOW_ENTITY SHADOW_BLOCK_ENTITY SHADOW_VEGETATION !SHADOW_CLOUD SHADOW_LOD AO LIGHT_SHAFT TAA FXAA TAA_MODE=0 !TAA_SELECTIVE CLOUDS=2 CLOUD_THICKNESS=5 CLOUD_DETAIL=1.0 REFLECTION=2 REFLECTION_MODE=1 REFLECTION_TRANSLUCENT !REFLECTION_PREVIOUS REFLECTION_SPECULAR !REFLECTION_SKYBOX SPECULAR_HIGHLIGHT=2 !DOF !MOTION_BLUR !DIRTY_LENS !WORLD_CURVATURE !RETRO_FILTER !WHITE_WORLD MCBL_DISTANCE=128 MCBL_HALF_HEIGHT !MCBL_FOG !MCBL_SS MATERIAL_FORMAT=1 SELF_SHADOW_QUALITY=8 PARALLAX_QUALITY=32 PARALLAX_DISTANCE=16 shadowMapResolution=1536 shadowDistance=128.0 SSR_STEPS=20 SHADOW_FILTER_SAMPLES=5 AO_METHOD=1 REFLECTION_LOD=0 MULTICOLORED_BLOCKLIGHT !ADVANCED_MATERIALS REFLECTION_ROUGH PARALLAX SELF_SHADOW WATER_PARALLAX",
+            "profile.GTX1070TI_PBR=SHADOW SHADOW_FILTER SHADOW_COLOR SHADOW_ENTITY SHADOW_BLOCK_ENTITY SHADOW_VEGETATION !SHADOW_CLOUD SHADOW_LOD AO LIGHT_SHAFT TAA FXAA TAA_MODE=0 !TAA_SELECTIVE CLOUDS=2 CLOUD_THICKNESS=5 CLOUD_DETAIL=1.0 REFLECTION=2 REFLECTION_MODE=1 REFLECTION_TRANSLUCENT !REFLECTION_PREVIOUS REFLECTION_SPECULAR !REFLECTION_SKYBOX SPECULAR_HIGHLIGHT=2 !DOF !MOTION_BLUR !DIRTY_LENS !WORLD_CURVATURE !RETRO_FILTER !WHITE_WORLD MCBL_DISTANCE=128 MCBL_HALF_HEIGHT !MCBL_FOG !MCBL_SS MATERIAL_FORMAT=1 SELF_SHADOW_QUALITY=8 PARALLAX_QUALITY=32 PARALLAX_DISTANCE=16 shadowMapResolution=1536 shadowDistance=128.0 SSR_STEPS=24 SHADOW_FILTER_SAMPLES=5 AO_METHOD=0 REFLECTION_LOD=0 !MULTICOLORED_BLOCKLIGHT ADVANCED_MATERIALS !REFLECTION_ROUGH PARALLAX !SELF_SHADOW WATER_PARALLAX",
+            "",
+            "#\\u5f3a\\u5236\\u89c6\\u9891\\u8bbe\\u7f6e"
+          ]
+        },
+        {
+          "start": 19,
+          "end": 21,
+          "lines": [
+            "#\\u6e38\\u620f\\u5185\\u8bbe\\u7f6e\\u9875\\u9762\\u5e03\\u5c40",
+            "screen=<empty> <empty> ABOUT <profile> <empty> <empty> [LIGHTING] [MATERIAL] [ENVIRONMENT] [CAMERA] [COLOR] [CGT] [ANTIALIASING] [EXTRAS] [PERFORMANCE]"
+          ]
+        },
+        {
+          "start": 97,
+          "end": 98,
+          "lines": [
+            "# \\u5e38\\u7528\\u6027\\u80fd\\u5f00\\u5173\\u96c6\\u4e2d\\u5230\\u4e00\\u4e2a\\u9875\\u9762\\uff1b\\u4e0e\\u539f\\u6709\\u83dc\\u5355\\u91cc\\u7684\\u8bbe\\u7f6e\\u4fdd\\u6301\\u540c\\u6b65\\u3002",
+            "screen.PERFORMANCE=<empty> <empty> SSR_STEPS SHADOW_FILTER_SAMPLES shadowMapResolution shadowDistance AO_METHOD REFLECTION_LOD SHADOW_ENTITY SHADOW_BLOCK_ENTITY SHADOW_VEGETATION WATER_PARALLAX MULTICOLORED_BLOCKLIGHT MCBL_DISTANCE MCBL_HALF_HEIGHT MCBL_FOG ADVANCED_MATERIALS PARALLAX_QUALITY PARALLAX_DISTANCE SELF_SHADOW REFLECTION_ROUGH DOF MOTION_BLUR",
+            "",
+            "#\\u6ed1\\u5757\\u9009\\u9879"
+          ]
+        },
+        {
+          "start": 100,
+          "end": 101,
+          "lines": [
+            "#\\u6309\\u529f\\u80fd\\u5f00\\u5173\\u6e32\\u67d3\\u7a0b\\u5e8f"
+          ]
+        },
+        {
+          "start": 126,
+          "end": 127,
+          "lines": [
+            "#\\u7981\\u7528\\u5feb\\u901f\\u6811\\u53f6\\u6a21\\u5f0f"
+          ]
+        },
+        {
+          "start": 129,
+          "end": 130,
+          "lines": [
+            "#\\u5141\\u8bb8\\u8f83\\u4f4e\\u4e0d\\u900f\\u660e\\u5ea6"
+          ]
+        },
+        {
+          "start": 136,
+          "end": 137,
+          "lines": [
+            "#\\u542f\\u7528\\u4fe1\\u6807\\u5149\\u675f\\u6df1\\u5ea6"
+          ]
+        },
+        {
+          "start": 139,
+          "end": 140,
+          "lines": [
+            "#\\u81ea\\u5b9a\\u4e49\\u7eb9\\u7406"
+          ]
+        },
+        {
+          "start": 143,
+          "end": 144,
+          "lines": [
+            "#\\u81ea\\u5b9a\\u4e49\\u65f6\\u95f4\\u7edf\\u4e00\\u53d8\\u91cf"
+          ]
+        },
+        {
+          "start": 160,
+          "end": 161,
+          "lines": [
+            "#\\u81ea\\u5b9a\\u4e49\\u5931\\u660e\\u7edf\\u4e00\\u53d8\\u91cf"
+          ]
+        },
+        {
+          "start": 164,
+          "end": 165,
+          "lines": [
+            "#\\u81ea\\u5b9a\\u4e49\\u751f\\u7269\\u7fa4\\u7cfb\\u7edf\\u4e00\\u53d8\\u91cf"
+          ]
+        },
+        {
+          "start": 208,
+          "end": 209,
+          "lines": [
+            "#\\u5e27\\u6296\\u52a8\\u7edf\\u4e00\\u53d8\\u91cf"
+          ]
+        },
+        {
+          "start": 212,
+          "end": 213,
+          "lines": [
+            "#\\u9700\\u8981\\u65f6\\u5173\\u95ed\\u89c6\\u9525\\u5254\\u9664"
+          ]
+        },
+        {
+          "start": 217,
+          "end": 218,
+          "lines": [
+            "#\\u5173\\u95ed\\u5b9e\\u4f53\\u6295\\u5f71\\u65f6\\u8df3\\u8fc7\\u5176\\u9634\\u5f71\\u7ed8\\u5236"
+          ]
+        },
+        {
+          "start": 225,
+          "end": 226,
+          "lines": [
+            "#\\u4f53\\u7d20\\u5f69\\u8272\\u65b9\\u5757\\u5149\\u4f9d\\u8d56\\u4e0e\\u7eb9\\u7406\\u5c3a\\u5bf8"
+          ]
+        },
+        {
+          "start": 278,
+          "end": 279,
+          "lines": [
+            "#Distant Horizons \\u8fdc\\u666f\\u517c\\u5bb9"
+          ]
+        },
+        {
+          "start": 284,
+          "end": 284,
+          "lines": [
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "path": "lang/en_US.lang",
+      "base_sha256": "ea0819802e74b15b098a161a59cc99fb84e14793be7359f6b54315a12aa882c4",
+      "patched_sha256": "abb07be2ecf06d2c3ff31cc105da541564c5da8b5fcf24cbc11768d49aa695ab",
+      "ops": [
+        {
+          "start": 1180,
+          "end": 1180,
+          "lines": [
+            "screen.PERFORMANCE=Performance Tuning (1070 Ti)",
+            "option.SSR_STEPS=SSR Trace Steps",
+            "option.SSR_STEPS.comment=Maximum screen-space reflection iterations. Original: 30. Lower values can miss small or distant reflections.",
+            "option.SHADOW_FILTER_SAMPLES=Shadow Filter Samples",
+            "option.SHADOW_FILTER_SAMPLES.comment=9 preserves the original filter. 5 uses a symmetric center-and-cross filter, with reduced edge quality.",
+            "profile.GTX1070TI_BALANCED=1070 Ti - Balanced",
+            "profile.GTX1070TI_FAST=1070 Ti - Fast",
+            "profile.GTX1070TI_COLOR=1070 Ti - Nearby Colored Light",
+            "profile.GTX1070TI_PBR=1070 Ti - Nearby PBR",
+            ""
+          ]
+        }
+      ]
+    }
+  ]
+}
